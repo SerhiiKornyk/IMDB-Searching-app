@@ -1,4 +1,4 @@
-package com.example.mvvmexample.Models
+package com.example.mvvmexample.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -7,10 +7,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TVEntityApi(
     @SerializedName("d")
-    val entitiesUI:ArrayList<TVEntityUI>,
+    val entitiesUI:ArrayList<TVEntityUI>?,
     @SerializedName("q")
-    val query:String,
-    val v:String
+    val query:String?,
+    val v:String?
     ):Parcelable
 
 
@@ -20,20 +20,20 @@ data class TVEntityApi(
 
 @Parcelize
 data class TVEntityUI(
-    val id: String,
+    val id: String?,
     @SerializedName("l")
-    val name: String,
+    val name: String?,
     @SerializedName("q")
-    val category: String,
-    val rank: Int,
+    val category: String?,
+    val rank: String?,
     @SerializedName("s")
-    val actor: String,
+    val actor: String?,
     @SerializedName("y")
-    val launchYear: String,
+    val launchYear: String?,
     @SerializedName("yr")
-    val years: String
+    val years: String?
 
 
 ) : Parcelable {
-    var actors = ArrayList<String>(actor.split(","))
+    var actors = ArrayList<String>(actor?.split(","))
 }

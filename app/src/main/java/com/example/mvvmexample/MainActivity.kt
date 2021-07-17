@@ -1,29 +1,21 @@
 package com.example.mvvmexample
 
-import android.app.SearchManager
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.mvvmexample.Adapters.TVShowsRecyclerViewAdapter
+import com.example.mvvmexample.models.TVEntityUI
 import com.example.mvvmexample.Repo.ImdbRepo
 import com.example.mvvmexample.ViewModels.ImdbFilmsListViewModel
 import com.example.mvvmexample.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONArray
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
@@ -31,22 +23,32 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val TAG = "MAIN_ACTIVITY"
 
     private lateinit var binding: ActivityMainBinding
+    private val tvShowAdapter: TVShowsRecyclerViewAdapter by lazy {
+        TVShowsRecyclerViewAdapter(
+            emptyList()
+        )
+    }
 
     @Inject
     lateinit var repo: ImdbRepo
     private val viewModel: ImdbFilmsListViewModel by lazy { ImdbFilmsListViewModel(repo) }
-    private val uiScope: CoroutineScope = CoroutineScope(Dispatchers.Default + CoroutineName("ui"))
+    private val activityScope: CoroutineScope =
+        CoroutineScope(Dispatchers.IO + CoroutineName("mainActivity"))
 
 
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         setSupportActionBar(findViewById(R.id.toolbar))
-
         MyApplication.instance?.getComponent()?.inject(this)
+        configUI()
 
+    }
+
+    private fun configUI() {
+        binding.showRv.adapter = tvShowAdapter
+        binding.executePendingBindings()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,7 +68,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query?.isNotEmpty() == true)
-            uiScope.launch { getShow(query) }
+            activityScope.launch {
+                val data = getShow(query)
+                withContext(Dispatchers.Main) {
+                    tvShowAdapter.updateData(data)
+                }
+            }
         return true
     }
 
@@ -75,10 +82,23 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
 
-    private suspend fun getShow(query: String) {
-        val result = viewModel.getShows(query)
-            .onEach { Log.d(TAG, "handleIntent: $it") }
-            .launchIn(uiScope)
+    private suspend fun getShow(query: String): List<TVEntityUI> {
+        val dataList = mutableListOf<TVEntityUI>()
+        viewModel.getShows(query)
+            ?.catch {
+                dataList.add(
+                    TVEntityUI(
+                        null, null, null, null, null, null, null
+                    )
+                )
+            }
+            ?.onEach {
+                Log.d(TAG, "handleIntent: $it")
+                dataList.add(it)
+            }
+            ?.launchIn(activityScope)
+            ?.join()
+        return dataList
 
 
     }
