@@ -13,11 +13,12 @@ import javax.inject.Inject
 class ImdbRepo @Inject constructor(private val apiInterface: ApiInterface) {
 
 
-    suspend fun getFilm(): Flow<TVEntityUI> {
+    suspend fun getFilm(query: String): Flow<TVEntityUI?> {
         Log.d("TAG", "getFilm: Sending request")
         return apiInterface.getFilm(
             RAPID_API_IMDB_HOST,
-            RAPID_API_KEY
+            RAPID_API_KEY,
+            query
         ).entitiesUI.asFlow()
 
     }
