@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
+
         MyApplication.instance?.getComponent()?.inject(this)
         configUI()
 
@@ -87,9 +88,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         viewModel.getShows(query)
             ?.catch {
                 dataList.add(
-                    TVEntityUI(
-                        null, null, null, null, null, null, null
-                    )
+                    TVEntityUI.returnEmpty()
                 )
             }
             ?.onEach {

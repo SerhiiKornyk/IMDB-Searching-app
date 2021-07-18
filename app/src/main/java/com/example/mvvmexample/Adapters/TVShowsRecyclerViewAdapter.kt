@@ -3,6 +3,9 @@ package com.example.mvvmexample.Adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.load
+import com.example.mvvmexample.R
 import com.example.mvvmexample.models.TVEntityUI
 import com.example.mvvmexample.databinding.TvShowItemBinding
 
@@ -34,6 +37,14 @@ class TVShowsRecyclerViewAdapter(private var data: List<TVEntityUI>) :
 class TVShowHolder(private val binding: TvShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(entity: TVEntityUI) {
           binding.tvEntity = entity
+
+        binding.tvIv.load(entity.imageData?.imageUrl) {
+            placeholder(R.drawable.ic_baseline_play_circle_outline_24)
+            error(R.drawable.ic_baseline_play_circle_outline_24)
+            fallback(R.drawable.ic_baseline_play_circle_outline_24)
+        }
+
+
     }
 
 }

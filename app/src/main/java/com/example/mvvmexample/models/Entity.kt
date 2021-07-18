@@ -7,19 +7,17 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TVEntityApi(
     @SerializedName("d")
-    val entitiesUI:ArrayList<TVEntityUI>?,
+    val entitiesUI: ArrayList<TVEntityUI>?,
     @SerializedName("q")
-    val query:String?,
-    val v:String?
-    ):Parcelable
-
-
-
-
+    val query: String?,
+    val v: String?
+) : Parcelable
 
 
 @Parcelize
 data class TVEntityUI(
+    @SerializedName("i")
+    val imageData: ImageData?,
     val id: String?,
     @SerializedName("l")
     val name: String?,
@@ -31,9 +29,23 @@ data class TVEntityUI(
     @SerializedName("y")
     val launchYear: String?,
     @SerializedName("yr")
-    val years: String?
+    val years: String?,
 
-
-) : Parcelable {
+    ) : Parcelable {
     var actors = ArrayList<String>(actor?.split(","))
+
+    companion object {
+        fun returnEmpty(): TVEntityUI = TVEntityUI(
+            null, null, null, null, null, null, null, null
+        )
+    }
+
+
 }
+
+@Parcelize
+data class ImageData(
+    val height: String?,
+    val imageUrl: String?,
+    val width: String?
+) : Parcelable
