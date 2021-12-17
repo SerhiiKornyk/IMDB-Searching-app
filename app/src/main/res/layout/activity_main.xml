@@ -1,105 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="vm"
-            type="com.example.mvvmexample.viewModels.WeatherScreenViewModel" />
-
-        <variable
-            name="clickHandler"
-            type="com.example.mvvmexample.ui.MainActivity.WeatherActivityClickHandler" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvLatitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/latitude_f(vm.uiModel.latitude)}"
-            android:visibility="@{vm.uiModel.latitude != null ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.066" />
-
-        <TextView
-            android:id="@+id/tvLongitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:visibility="@{vm.uiModel.longitude != null ? View.VISIBLE : View.GONE}"
-            android:text="@{@string/longitude_f(vm.uiModel.longitude)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLatitude"
-            >
-
-        </TextView>
-
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spLocation"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.126"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.512" />
-
-
-        <TextView
-            android:id="@+id/tvActualTemperature"
-            android:visibility="@{vm.uiModel.temperatureK != null ? View.VISIBLE : View.INVISIBLE}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{@string/actual_temperature_C_f(vm.uiModel.getTemperatureInCelsius())}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.414"
-            app:layout_constraintStart_toEndOf="@+id/spLocation"
-            app:layout_constraintTop_toTopOf="@+id/spLocation"
-            tools:text="ActualTemperature" />
-
-
-        <TextView
-            android:id="@+id/tvFeelsTemp"
-            android:visibility="@{vm.uiModel.feelsTemperatureK != null ? View.VISIBLE : View.INVISIBLE}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{@string/feels_temperature_C_f(vm.uiModel.getFeelsTemperatureInCelsius())}'
-
-            app:layout_constraintBottom_toTopOf="@+id/tvActualTemperature"
-            app:layout_constraintEnd_toEndOf="@+id/tvActualTemperature"
-            tools:text="Feeling Temperature" />
-
-        <Button
-            android:id="@+id/btnWeather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{clickHandler::getWeather}"
-            android:text="@string/get_weather"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.122"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spLocation"
-            app:layout_constraintVertical_bias="0.242">
-
-        </Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

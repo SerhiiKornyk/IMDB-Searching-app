@@ -35,7 +35,6 @@ class RemoteDataSourceModule {
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(interceptor)
-
         return builder.build()
     }
 

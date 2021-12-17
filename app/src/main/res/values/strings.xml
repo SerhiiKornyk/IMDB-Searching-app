@@ -9,6 +9,10 @@
     <string name="latitude_f">Latitude: %.2f</string>
     <string name="longitude_f">Longitude: %.2f</string>
     <string name="your_position">Your position</string>
+    <string name="click_on_me">Click on me!</string>
+    <string name="text">text</string>
+    <string name="image">image</string>
+    <string name="webview">webview</string>
     <string-array name="locations_granted">
         <item>Your position</item>
         <item>Kyiv</item>
