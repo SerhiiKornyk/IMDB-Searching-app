@@ -12,10 +12,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class MainFragmentViewModel @Inject constructor(private val repo: WeatherRepo) : ViewModel() {
+class MainFragmentViewModel(private var repo: WeatherRepo) : ViewModel() {
 
     private var ids: IdsApiResponse? = null
 

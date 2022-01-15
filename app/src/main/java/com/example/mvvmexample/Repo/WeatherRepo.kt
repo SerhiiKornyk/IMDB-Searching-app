@@ -5,9 +5,8 @@ import com.example.mvvmexample.models.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-import javax.inject.Inject
 
-class WeatherRepo @Inject constructor(
+class WeatherRepo(
     private val apiInterface: ApiInterface,
 ) {
 

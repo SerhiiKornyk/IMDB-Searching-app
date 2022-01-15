@@ -3,7 +3,6 @@ package com.example.mvvmexample.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.mvvmexample.MyApplication
 import com.example.mvvmexample.R
 import com.example.mvvmexample.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient

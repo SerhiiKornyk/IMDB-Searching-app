@@ -1,31 +1,32 @@
 package com.example.mvvmexample.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.mvvmexample.MyApplication
 import com.example.mvvmexample.R
 import com.example.mvvmexample.databinding.FragmentMainBinding
 import com.example.mvvmexample.viewModels.MainFragmentViewModel
 import kotlinx.coroutines.flow.collect
 import coil.load
 import com.example.mvvmexample.models.ObjectApiResponse
-import com.example.mvvmexample.viewModels.ViewModelFactory
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.fragmentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
+import org.koin.core.scope.Scope
 
-class MainFragment : Fragment() {
+class MainFragment() : Fragment(), AndroidScopeComponent {
+
+    override val scope: Scope by fragmentScope()
 
     private lateinit var binding: FragmentMainBinding
 
-    @Inject
-    lateinit var vmFactory: ViewModelFactory
-    lateinit var viewModel: MainFragmentViewModel
+
+    val viewModel: MainFragmentViewModel by viewModel(qualifier = named("mainFragmentViewModel"))
 
     companion object {
         @JvmStatic
@@ -39,9 +40,6 @@ class MainFragment : Fragment() {
     ): View {
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        MyApplication.instance?.getComponent()?.inject(this)
-
-        viewModel = ViewModelProvider(this, vmFactory).get(MainFragmentViewModel::class.java)
 
         subscribeUi()
         configUi()
@@ -62,6 +60,9 @@ class MainFragment : Fragment() {
                 when (state) {
                     is MainFragmentUiState.SuccessState -> {
                         setVisibleComponent(state.objectApiResponse)
+                    }
+                    else -> {
+                        // handle error
                     }
                 }
 
