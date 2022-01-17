@@ -1,14 +1,32 @@
 <resources>
-    <string name="app_name">MVVM example</string>
+    <string name="app_name">Weather App</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="current_location_d"> Current location lat: %d1; lng: %d2</string>
+    <string name="current_location"> Current location</string>
+    <string name="get_weather">Get Weather</string>
+    <string name="actual_temperature_C_f"> Actual temperature: %.1f°C</string>
+    <string name="feels_temperature_C_f"> Feeling temperature: %.1f°C</string>
+    <string name="latitude_f">Latitude: %.2f</string>
+    <string name="longitude_f">Longitude: %.2f</string>
+    <string name="your_position">Your position</string>
+    <string name="click_on_me">Click on me!</string>
+    <string name="text">text</string>
+    <string name="image">image</string>
+    <string name="webview">webview</string>
+    <string-array name="locations_granted">
+        <item>Your position</item>
+        <item>Kyiv</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Tokyo</item>
+        <item>Dallas</item>
+    </string-array>
+    <string-array name="locations_denied">
+        <item>Kyiv</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Tokyo</item>
+        <item>Dallas</item>
+    </string-array>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="search_hint">Some film?</string>
-    <string name="todo">TODO</string>
 </resources>
